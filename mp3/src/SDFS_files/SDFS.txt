@@ -1,0 +1,30 @@
+SDFS
+Log files are files that contain messages about the system, including the kernel, services, and applications running on it. There are different log files for different information. For example, there is a default system log file, a log file just for security messages, and a log file for cron tasks.
+
+Log files can be very useful when trying to troubleshoot a problem with the system such as trying to load a kernel driver or when looking for unauthorized log in attempts to the system. This chapter discusses where to find log files, how to view log files, and what to look for in log files.
+
+Some log files are controlled by a daemon called syslogd. A list of log messages maintained by syslogd can be found in the /etc/syslog.conf configuration file.
+Most log files are located in the /var/log/ directory. Some applications such as httpd and samba have a directory within /var/log/ for their log files.
+
+You may notice multiple files in the log file directory with numbers after them. These are created when the log files are rotated. Log files are rotated so their file sizes do not become too large. The logrotate package contains a cron task that automatically rotates log files according to the /etc/logrotate.conf configuration file and the configuration files in the /etc/logrotate.d/ directory. By default, it is configured to rotate every week and keep four weeks worth of previous log files.
+An extended log file contains a sequence of lines containing ASCII characters terminated by either the sequence LF or CRLF. Log file generators should follow the line termination convention for the platform on which they are executed. Analyzers should accept either form. Each line may contain either a directive or an entry.
+
+Entries consist of a sequence of fields relating to a single HTTP transaction. Fields are separated by whitespace, the use of tab characters for this purpose is encouraged. If a field is unused in a particular entry dash "-" marks the omitted field. Directives record information about the logging process itself.
+
+Lines beginning with the # character contain directives. The following directives are defined:
+
+Version: <integer>.<integer>
+The version of the extended log file format used. This draft defines version 1.0.
+Fields: [<specifier>...]
+Specifies the fields recorded in the log.
+Software: string
+Identifies the software which generated the log.
+Start-Date: <date> <time>
+The date and time at which the log was started.
+End-Date:<date> <time>
+The date and time at which the log was finished.
+Date:<date> <time>
+The date and time at which the entry was added.
+Remark: <text>
+Comment information. Data recorded in this field should be ignored by analysis tools.
+The directives Version and Fields are required and should precede all entries in the log. The Fields directive specifies the data recorded in the fields of each entry.
